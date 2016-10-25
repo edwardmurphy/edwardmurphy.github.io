@@ -1,89 +1,103 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-        <meta charset="utf-8" />
-        <title>ad astra per aspera - Articles</title>
-        <link rel="stylesheet" href="https://edwardmurphy.github.io/theme/css/main.css" />
+  <meta charset="utf-8">
+  <!-- Site Meta Data -->
+  <title>ad astra per aspera - Articles</title>
+  <meta name="description" content="">
+  <meta name="author" content="Edward Murphy">
 
-        <!--[if IE]>
-            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+  <!-- Style Meta Data -->
+  <link rel="stylesheet" href="https://edwardmurphy.github.io/theme/css/notebook.css" type="text/css" />
+  <link rel="shortcut icon" href="https://edwardmurphy.github.io/">
+
+  <!-- Feed Meta Data -->
+  <link href="https://edwardmurphy.github.io/" type="application/atom+xml" rel="alternate" title="ad astra per aspera ATOM Feed" />
+
+  <!-- Twitter Feed -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="">
+  <meta name="twitter:image" content="https://edwardmurphy.github.io/">
+
+<meta name="twitter:creator" content="">
+<meta name="twitter:url" content="https://edwardmurphy.github.io">
+<meta name="twitter:title" content="ad astra per aspera">
+<meta name="twitter:description" content="">
+
+<!-- Facebook Meta Data -->
+<meta property="og:title" content="ad astra per aspera" />
+<meta property="og:description" content="" />
+<meta property="og:image" content="" />
+
+<meta name="twitter:creator" content="">
+<meta name="twitter:url" content="https://edwardmurphy.github.io/category/articles.html">
+<meta name="twitter:title" content="ad astra per aspera ~ Articles">
+<meta name="twitter:description" content="Articles de Articles">
+
+<!-- Facebook Meta Data -->
+<meta property="og:title" content="ad astra per aspera ~ Articles" />
+<meta property="og:description" content="Articles de Articles" />
+<meta property="og:image" content="" />
 </head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://edwardmurphy.github.io/">ad astra per aspera </a></h1>
-                <nav><ul>
-    
-                        <li><a href="https://edwardmurphy.github.io/pages/about.html">About</a></li>
-    
-                        <li><a href="https://edwardmurphy.github.io/pages/currently-reading.html">Currently Reading</a></li>
-    
-                        <li><a href="https://edwardmurphy.github.io/pages/curriculum-vitae.html">Curriculum Vitae</a></li>
-                    <li class="active"><a href="https://edwardmurphy.github.io/category/articles.html">Articles</a></li>
-                </ul>
-                </nav>
-        </header><!-- /#banner -->
+<body>
+  <!-- Sidebar -->
+  <aside>
+    <p><a href="https://edwardmurphy.github.io"><img id="avatar" src="https://edwardmurphy.github.io/"></a></p>
+    <h1>ad astra per aspera</h1>
+    <p></p>
+    <hr>
+    <h2>Social</h2>
+    <ul class="social">
+      <li style="list-style-image : url(https://edwardmurphy.github.io/theme/images/icons/github.png);"><a href="https://github.com/edwardmurphy">GitHub</a></li>
+      <li style="list-style-image : url(https://edwardmurphy.github.io/theme/images/icons/linkedin.png);"><a href="https://www.linkedin.com/in/edward-murphy-000b002">LinkedIn</a></li>
+      <li style="list-style-image : url(https://edwardmurphy.github.io/theme/images/icons/rss.png);"><a href="https://edwardmurphy.github.io/" rel="alternate"><i class="icon-bookmark icon-large"></i>Atom feed</a></li>
+    </ul>
+    <h2>Pages</h2>
+    <ul class="navbar">
+      <li><a href="https://edwardmurphy.github.io/pages/about.html">About</a></li>
+      <li><a href="https://edwardmurphy.github.io/pages/curriculum-vitae.html">Curriculum Vitae</a></li>
+      <li><a href="https://edwardmurphy.github.io/pages/currently-reading.html">Currently Reading</a></li>
+    </ul>
+    <h2>Categories</h2>
+    <ul class="navbar">
+      <li class="active"><a href="https://edwardmurphy.github.io/category/articles.html">Articles</a></li>
+    </ul> 
+  </aside>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://edwardmurphy.github.io/why-i-chose-pelican.html">Why I Chose Pelican</a></h1>
-<footer class="post-info">
-        <span>Wed 19 October 2016</span>
-<span>| tags: <a href="https://edwardmurphy.github.io/tag/pelican.html">pelican</a><a href="https://edwardmurphy.github.io/tag/python.html">python</a></span>
-</footer><!-- /.post-info --><p>In this post I'd like to give some background about my choice of Pelican as the site generator for my website. </p>
-<p>I've been considering and planning a website/blog for over a year now as a hobby. There were some practical reasons for having a website that appealed to me: collecting references for projects, documenting steps for projects, detailing my preferences among competing softwares (mostly in Linux), posting code I've generated. This last reason was one of the main drivers that lead to my current configuration: using GitHub to host the site. Like the entire programming world, I've maintained code on GitHub - nothing fancy and mostly under previous handles which I've since deleted as I tried to debug my website generation. GitHub also provides hosting of static websites (which you most certainly know since you've arrived at such a site), so it was natural to go this route and keep my code base and (possibly) related blog discussions in close quarters. </p>
-<p>My first attempts at creating a site on GitHub used the default Jekyll templates. Since these were experimental days - trying to figure out what I was doing - I broke the site on multiple occasions. At various points I deleted my GitHub accounts and created new accounts in order to start completely from scratch - so far down the rabbit hole I was in breaking and "fixing". This isn't really a commentary on Jekyll as a tool for newbies, i.e. I'm not complaining that it's too difficult to use (though frankly I don't remember). However, I didn't stick with Jekyll predominantly because...well, because it's predominent. That's just my style. If everyone else is doing it, then I figure everyone else is wrong  - or I at least seek the underdog. So I sought something else. </p>
-<p>With that said, Pelican is by no means an underdog. In fact, it's a very popular static site generator. I chose it since it's written in Python, and I'm currently teaching myself Python. I thought it would be fun to delve into the source code for Pelican as I learned Python...which to date I haven't even done. There's really nothing "Pythony" I've encountered in Pelican other than the configuration file, which is merely "Pythony" since it ends in .py. </p>
-<p>There are a grip of templates available for Pelican, and it can be overwhelming to make a choice. I currently use the blueidea template, mostly because it was the most visually appealing of the templates which presented my basic content without any errors.</p>
-<p>I think Go is an intriguing language to learn as well, and the most popular static site generator written in Go appears to be Hugo. I considered using Hugo to generate my site, and it's certainly still possible I'll do so. At this point, it's merely a success for me to have a site, being blogging and adding features, and have some fun, no matter the language of the static site generator. I realized I was getting wayyyyy too caught up in that choice, so for now, Pelican it is. </p>
-<p>I've found it difficult at times managing the GitHub repositories with my current setup - all source files in one repository and output files (generated by Pelican) in the required repository (username.github.io). I'll discuss this in a follow-up. In the meantime, feel free to check out my GitHub site and view the source code. There is nothing even remotely unique about my codebase at this point, but it's a proud feeling to have content displayed which represents my interests and for which the sky is the limit. Ad astra per aspera.</p>
-<p>Thanks for reading.</p>
-<p>-Edward </p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <ol id="posts-list" class="hfeed">
+  <!-- Content -->
+  <article>
+<ol>
+	<li class="post_list"><p class="post_entry">
+		<h2 class="post_title"><a href="https://edwardmurphy.github.io/why-i-chose-pelican.html" rel="bookmark" title="Permalink to Why I Chose Pelican">Why I Chose Pelican</a></h2>
+		<a href="https://edwardmurphy.github.io/author/edward-murphy.html">@Edward Murphy</a>
+		<span> dans </span>
+		<span class="post_category"><a href="https://edwardmurphy.github.io/category/articles.html" rel="bookmark" title="Permalink to Articles">[ Articles ]</a></span>
+		<span> le </span>
+		<span class="post_date">Wed 19 October 2016</span>
+	</li>
+	<li class="post_list"><p class="post_entry">
+		<h2 class="post_title"><a href="https://edwardmurphy.github.io/welcome.html" rel="bookmark" title="Permalink to Welcome!">Welcome!</a></h2>
+		<a href="https://edwardmurphy.github.io/author/edward-murphy.html">@Edward Murphy</a>
+		<span> dans </span>
+		<span class="post_category"><a href="https://edwardmurphy.github.io/category/articles.html" rel="bookmark" title="Permalink to Articles">[ Articles ]</a></span>
+		<span> le </span>
+		<span class="post_date">Mon 10 October 2016</span>
+	</li>
+</ol>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://edwardmurphy.github.io/welcome.html" rel="bookmark"
-                           title="Permalink to Welcome!">Welcome!</a></h1>
-                </header>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <span>Mon 10 October 2016</span>
+  </article>
 
-</footer><!-- /.post-info -->                <p>Hello! Welcome to my website and blog. Check back often for updates. </p>
-                <a class="readmore" href="https://edwardmurphy.github.io/welcome.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-            </ol><!-- /#posts-list -->
-<p class="paginator">
-    Page 1 / 1
-</p>
-            </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="https://flipboard.com/@emurphy711">Flipboard</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
+  <!-- Footer -->
+  <footer>
+    <address id="about" class="vcard body">
+      Blog powered by <a href="http://getpelican.com/">Pelican</a>, 
+      which takes great advantage of <a href="http://python.org">Python</a>.
+      Theme <a href="https://github.com/quack1/notebook/">Notebook</a> by <a href="https://twitter.com/_Quack1">@Quack1</a>.
+    </address>
+  </footer>
 
-                            <li><a href="https://github.com/edwardmurphy">GitHub</a></li>
-                            <li><a href="https://www.linkedin.com/in/edward-murphy-000b002">LinkedIn</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
-        </footer><!-- /#contentinfo -->
 
 </body>
 </html>
