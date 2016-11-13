@@ -81,23 +81,22 @@
 
 
 <p>Quick look to see that the expected directories are there to give a little boost of confidence that all went well. Remember, the SSD will be wiped clean, so be confident as can be! Then repeat for all other logical volumes as needed. Remember to unmount and delete the loop devices:</p>
-<div class="highlight"><pre><span></span><span class="err">\#</span> <span class="n">umount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span>
-<span class="err">\#</span> <span class="n">losetup</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">loop0</span>
+<div class="highlight"><pre><span></span>\# umount /dev/loop0
+\# losetup -d /dev/loop0
+</pre></div>
 
-<span class="cp">## Wiping SSD</span>
-<span class="n">I</span> <span class="n">followed</span> <span class="p">[</span><span class="n">this</span> <span class="n">page</span><span class="p">](</span><span class="nl">https</span><span class="p">:</span><span class="c1">//wiki.archlinux.org/index.php/Solid_State_Drives/Memory_cell_clearing) on Arch-Wiki to wipe my SSD. As disussed on the wiki page, my SSD was frozen, but after suspending the system it became unfrozen and I was able to proceed.</span>
 
-<span class="cp">## Repartioning SSD with Parted Magic</span>
-<span class="n">I</span> <span class="n">have</span> <span class="n">a</span> <span class="n">multiboot</span> <span class="n">USB</span> <span class="p">(</span><span class="n">courtesy</span> <span class="n">of</span> <span class="p">[</span><span class="n">yumi</span><span class="p">](</span><span class="nl">https</span><span class="p">:</span><span class="c1">//www.pendrivelinux.com/yumi-multiboot-usb-creator/)) that includes a live version of Parted Magic. Booting into this I was able to use GParted to create the following partitioning scheme:</span>
-<span class="mf">1.</span> <span class="mi">20</span><span class="n">GB</span> <span class="n">unformatted</span> <span class="n">partition</span>
-<span class="mf">2.</span> <span class="mi">80</span><span class="n">GB</span> <span class="n">partition</span> <span class="n">formatted</span> <span class="k">for</span> <span class="n">lvm</span> <span class="p">(</span><span class="n">linux</span> <span class="n">logical</span> <span class="n">volume</span> <span class="n">manager</span> <span class="n">utility</span><span class="p">)</span>
-<span class="mf">3.</span> <span class="mi">12</span><span class="n">GB</span> <span class="n">unallocated</span> <span class="n">space</span> <span class="n">at</span> <span class="n">end</span> <span class="n">of</span> <span class="n">drive</span>
-
-<span class="cp">## Reinstallation of Distros</span>
-<span class="n">So</span><span class="p">...</span><span class="n">this</span> <span class="n">is</span> <span class="n">where</span> <span class="n">things</span> <span class="n">got</span> <span class="n">difficult</span><span class="p">.</span> <span class="n">The</span> <span class="n">Linux</span> <span class="n">Mint</span> <span class="n">image</span> <span class="n">I</span> <span class="n">created</span> <span class="n">was</span> <span class="n">corrupted</span> <span class="n">somehow</span><span class="p">,</span> <span class="n">so</span> <span class="n">using</span> <span class="o">**</span><span class="n">dd</span><span class="o">**</span> <span class="n">to</span> <span class="k">copy</span> <span class="n">the</span> <span class="n">image</span> <span class="n">to</span> <span class="n">the</span> <span class="n">newly</span> <span class="n">created</span> <span class="n">lvm</span> <span class="n">partition</span> <span class="n">was</span> <span class="n">not</span> <span class="n">possible</span><span class="p">.</span> <span class="n">I</span> <span class="n">was</span> <span class="n">not</span> <span class="n">yet</span> <span class="n">aware</span> <span class="n">of</span> <span class="n">the</span> <span class="o">**</span><span class="n">ddrescue</span><span class="o">**</span> <span class="n">utility</span><span class="p">,</span> <span class="n">so</span> <span class="n">I</span> <span class="n">put</span> <span class="n">all</span> <span class="n">my</span> <span class="n">effort</span> <span class="n">into</span> <span class="n">copying</span> <span class="n">the</span> <span class="n">openSUSE</span> <span class="n">image</span> <span class="n">first</span><span class="p">.</span>
-
-<span class="n">Copying</span> <span class="n">the</span> <span class="n">openSUSE</span> <span class="n">image</span> <span class="n">directly</span> <span class="n">to</span> <span class="n">the</span> <span class="n">lvm</span> <span class="n">partition</span> <span class="n">did</span> <span class="n">not</span> <span class="n">work</span> <span class="n">because</span> <span class="n">the</span> <span class="n">initramfs</span> <span class="n">image</span> <span class="n">used</span> <span class="n">at</span> <span class="n">boot</span> <span class="n">did</span> <span class="n">not</span> <span class="n">include</span> <span class="n">capability</span> <span class="k">for</span> <span class="n">logical</span> <span class="n">volumes</span> <span class="p">(</span><span class="n">through</span> <span class="n">dracut</span><span class="p">).</span> 
-</pre></div>	
+<h2>Wiping SSD</h2>
+<p>I followed <a href="https://wiki.archlinux.org/index.php/Solid_State_Drives/Memory_cell_clearing">this page</a> on Arch-Wiki to wipe my SSD. As disussed on the wiki page, my SSD was frozen, but after suspending the system it became unfrozen and I was able to proceed.</p>
+<h2>Repartioning SSD with Parted Magic</h2>
+<p>I have a multiboot USB (courtesy of <a href="https://www.pendrivelinux.com/yumi-multiboot-usb-creator/">yumi</a>) that includes a live version of Parted Magic. Booting into this I was able to use GParted to create the following partitioning scheme:
+1. 20GB unformatted partition
+2. 80GB partition formatted for lvm (linux logical volume manager utility)
+3. 12GB unallocated space at end of drive</p>
+<h2>Reinstallation of Distros</h2>
+<p>So...this is where things got difficult. The Linux Mint image I created was corrupted somehow, so using <strong>dd</strong> to copy the image to the newly created lvm partition was not possible. I was not yet aware of the <strong>ddrescue</strong> utility, so I put all my effort into copying the openSUSE image first.</p>
+<p>Copying the openSUSE image directly to the lvm partition did not work because the initramfs image used at boot did not include capability for logical volumes (through dracut). 
+```</p>	
 
 	</article>
 
