@@ -146,14 +146,14 @@ UUID=uuid   /   ext4    defaults    0   1
 <span class="c1"># mount --rbind /sys sys/</span>
 <span class="c1"># chroot /mnt</span>
 <span class="c1"># update-initramfs -u</span>
-<span class="s1">&#39;&#39;</span><span class="err">&#39;</span>
-
-Update /etc/fstab as above, <span class="nb">exit</span> chroot, and update the bootloader:
 </pre></div>
 
 
-<h1>grub2-mkconfig -o /boot/grub/grub.cfg</h1>
-<p>```</p>
+<p>Update /etc/fstab as above, exit chroot, and update the bootloader:</p>
+<div class="highlight"><pre><span></span># grub2-mkconfig -o /boot/grub/grub.cfg
+</pre></div>
+
+
 <p>Reboot and Mint is available from the grub menu.</p>
 <h3>openSUSE in Logical Volume</h3>
 <p>In order to free up the first partition and have all distros in logical volumes, the openSUSE installation on /dev/sda2 needs to be copied to a new logical volume. Boot in Mint, and perform the following:
