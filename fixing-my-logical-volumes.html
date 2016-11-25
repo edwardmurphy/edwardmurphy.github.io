@@ -43,7 +43,7 @@
     <address class="vcard author">
       by <a class="url fn" href="https://edwardmurphy.github.io/author/edward-murphy.html">Edward Murphy</a>
     </address>
-  in <a href="https://edwardmurphy.github.io/category/articles.html">Articles</a>
+  in <a href="https://edwardmurphy.github.io/category/nerdy-stuff.html">Nerdy Stuff</a>
 <p class="tags">tagged <a href="https://edwardmurphy.github.io/tag/logical-volumes.html">logical volumes</a>, <a href="https://edwardmurphy.github.io/tag/linux.html">linux</a></p></div>		
 		<p>I use logical volumes on my Acer notebook. My current understanding of logical volumes is that they are most often utilized when disk space is combined across multiple physical volumes, i.e. disks. I have a single SSD in my notebook, so why use logical volumes? Because I like to tinker with linux distributions. I'm frequently installing new distros, resizing the space for each distro, adding shared space, uninstalling distros...tinkering. All of this is possible with a normal disk partitioning setup, but I found it to be cumbersome. After awhile unallocated partitions were squeezed between distros. Or I couldn't resize a partition easily since the next partition was not free. Sure, I could copy partitions to another disk, resize locally, then copy the saved partition. Or...I could use a tool that allows resizing on the fly. And is not "typical." Hence, my choice of logical volumes. </p>
 <p>Now, logical volumes even on a single disk are not a cakewalk. For one, I've had some difficulty installing new distros directly to a new logical volume. I'm writing this while running openSUSE Leap 42.1, which I had to install to a clean partition before copying to a logical volume. Logical volumes also aren't as visible - it is possible to delete the data on a logical volume without realizing it's there (see ED ADD REFERENCE). And, if you're like me and you don't really know what you're doing and you tinker, you can wind up with a scenario like I currently have: logical volumes spread across multiple (logical) partitions within a single extended partition.</p>
@@ -195,7 +195,7 @@ to the new partition:</p>
   	          <nav>
 	            <h2>Categories</h2>
 	            <ul>
-	                <li class="active"><a href="https://edwardmurphy.github.io/category/articles.html">Articles</a></li>
+	                <li class="active"><a href="https://edwardmurphy.github.io/category/nerdy-stuff.html">Nerdy Stuff</a></li>
 	                <li ><a href="https://edwardmurphy.github.io/category/past-reads.html">Past Reads</a></li>
 	            </ul>
 	          </nav>
