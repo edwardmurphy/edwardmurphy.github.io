@@ -6,7 +6,7 @@
 	<meta name="author" content="Edward Murphy">
 	
 
-  <meta name="description" content="One of my current hobbies (long since "in the works" but really just "in the brain") is collecting and refactoring all of my R code and writing the same code in Python. The main purpose of the refactoring my R code is to introduce myself to new libraries and functions ...">
+  <meta name="description" content="One of my current programming hobbies (long since "in the works" but really just "in the brain") is collecting and refactoring all of my R code and writing the same code in Python. The main purpose of refactoring my R code is to introduce myself to new libraries and functions ...">
 
 
 
@@ -26,6 +26,7 @@
 	      <nav class="pages">
 			  <a href="https://edwardmurphy.github.io/pages/about.html">About</a>
 -			  <a href="https://edwardmurphy.github.io/pages/curriculum-vitae.html">Curriculum Vitae</a>
+-			  <a href="https://edwardmurphy.github.io/pages/currently-reading.html">Currently Reading</a>
 	      </nav>
 		<a href="https://edwardmurphy.github.io" class="title">ad astra per aspera</a>
       </header>
@@ -44,31 +45,25 @@
     </address>
   in <a href="https://edwardmurphy.github.io/category/data-science.html">Data Science</a>
 <p class="tags">tagged <a href="https://edwardmurphy.github.io/tag/r.html">r</a>, <a href="https://edwardmurphy.github.io/tag/python.html">python</a></p></div>		
-		<p>One of my current hobbies (long since "in the works" but really just "in the brain") is collecting and refactoring all 
-of my R code and writing the same code in Python. The main purpose of the refactoring my R code is to introduce myself 
-to new libraries and functions in R, while also cleaning up code I wrote at the beginning of my R coding career. By 
-rewriting these R scripts in Python, I can interactively and practically learn a new language. </p>
-<p>I'll be updating this post as progress is made, but for now the R code has been collected as is viewable in GitHub. 
-The plan is to create a new repo for refactored R scripts and yet another repo for the corresponding Python scripts. 
-I'll likely use IPython/Jupyter for the Python scripts to track my notes as I learn. I don't know if R code can be 
-embedded in Jupyter notebooks, but if it can then perhaps I can save a step. </p>
+		<p>One of my current programming hobbies (long since "in the works" but really just "in the brain") is collecting and refactoring all of my R code and writing the same code in Python. The main purpose of refactoring my R code is to introduce myself to new libraries and functions in R, while also cleaning up code I wrote at the beginning of my R coding career. By rewriting these R scripts in Python, I can interactively and practically learn a new language. </p>
+<p>I'll be updating this post or creating new posts as progress is made, but for now the R code has been collected as is viewable in GitHub. The plan is to create a new repo for refactored R scripts and yet another repo for the corresponding Python scripts. I'll likely use IPython/Jupyter for the Python scripts to track my notes as I learn. I don't know if R code can be embedded in Jupyter notebooks, but if it can then perhaps I can save a step. </p>
 <p>Thanks for reading.
 -Edward</p>
 <p>UPDATE: Yep, R can be run in Jupyter. Fun. There are at least 2 ways to run R in Jupyter:</p>
 <ol>
 <li>Run R "natively" using the R Kernal in Jupyter</li>
-<li>Run R using the Python kernel</li>
+<li>Run R within the Python kernel using the rpy2 package</li>
 </ol>
-<p>Because I want to combine R and Python code (well, at least I think I do, since I'll be running both), I'll go with option 2 for now. To do this, the <em>rpy2</em> package needs to be installed. I had all sorts of compilation issues using <em>pip</em> to install this, so I installed using the package manager (zypper in SUSE).</p>
+<h2>R Kernel</h2>
+<p>To run R natively in Jupyter, <a href="http://irkernel.github.io/installation">IRkernel</a> needs to be installed. I had a whale of a time installing the required dependency packages in R due to missing libraries (most notably libcurl and libcurl-openssl-devel). Within openSUSE Leap 42.1 I wasn't even able to locate the latter package within Yast. A Google search for the rpm file did the trick though. Oh, and gcc-c++ was needed as well for compilation. Also, install_github didn't work at somet point. Had to use install_git instead.</p>
+<h2>R within Python Kernel</h2>
+<p>To do this, the <strong>rpy2</strong> package needs to be installed. I had all sorts of compilation issues using <strong>pip</strong> to install this, so I installed using the package manager (zypper in SUSE).</p>
 <p>Once installed, <a href="https://edwardmurphy.github.io/self-intro-to-jupyter-notebooks.html">open up a Jupyter notebook</a> and run:</p>
 <div class="highlight"><pre><span></span><span class="nf">%load_ext</span> <span class="n">rpy2</span><span class="p">.</span><span class="n">ipython</span>
 </pre></div>
 
 
-<p>That's it! R code can then be run using the R-magic command.</p>
-<div class="highlight"><pre><span></span><span class="c">%R a=c(0,1)</span>
-<span class="c">%R a</span>
-</pre></div>	
+<p>That's it! R code can then be run using the R-magic command: prepend \%R before code. </p>	
 
 	</article>
 
@@ -90,7 +85,6 @@ embedded in Jupyter notebooks, but if it can then perhaps I can save a step. </p
 	                <li ><a href="https://edwardmurphy.github.io/category/blog.html">Blog</a></li>
 	                <li ><a href="https://edwardmurphy.github.io/category/book-reviews.html">Book Reviews</a></li>
 	                <li class="active"><a href="https://edwardmurphy.github.io/category/data-science.html">Data Science</a></li>
-	                <li ><a href="https://edwardmurphy.github.io/category/jupyter-notebooks.html">Jupyter Notebooks</a></li>
 	                <li ><a href="https://edwardmurphy.github.io/category/nerdy-stuff.html">Nerdy Stuff</a></li>
 	            </ul>
 	          </nav>
