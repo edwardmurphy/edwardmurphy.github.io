@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>How I Manage Multiple SSH Keys for GitHub Accounts - ad astra per aspera</title>	
+	<meta name="author" content="Edward Murphy">
+	
+
+  <meta name="description" content="I'm working on a new website (big6e) for which I'm again using the free hosting services of GitHub. Thus, locally I now have 2 directories that are clones of repos from 2 different GitHub accounts. Since I use ssh to push changes, I had to figure out how ...">
+
+
+
+	<link rel="stylesheet" href="https://edwardmurphy.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	    </div>
+	      <nav class="pages">
+			  <a href="https://edwardmurphy.github.io/pages/about.html">About</a>
+-			  <a href="https://edwardmurphy.github.io/pages/curriculum-vitae.html">Curriculum Vitae</a>
+-			  <a href="https://edwardmurphy.github.io/pages/currently-reading.html">Currently Reading</a>
+	      </nav>
+		<a href="https://edwardmurphy.github.io" class="title">ad astra per aspera</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>How I Manage Multiple SSH Keys for GitHub Accounts</h1>
+		
+<div class="metadata">
+  <time datetime="2016-12-09T00:00:00-08:00" pubdate>Fri 09 December 2016</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://edwardmurphy.github.io/author/edward-murphy.html">Edward Murphy</a>
+    </address>
+  in <a href="https://edwardmurphy.github.io/category/nerdy-stuff.html">Nerdy Stuff</a>
+<p class="tags">tagged <a href="https://edwardmurphy.github.io/tag/ssh.html">ssh</a>, <a href="https://edwardmurphy.github.io/tag/github.html">github</a></p></div>		
+		<p>I'm working on a new website (<a href="https://big6e.github.io">big6e</a>) for which I'm again using the free hosting services of 
+GitHub. Thus, locally I now have 2 directories that are clones of repos from 2 different GitHub accounts. Since I use 
+ssh to push changes, I had to figure out how to manage this.</p>
+<p>I used <a href="https://gist.github.com/jexchan/2351996">this</a> to configure multiple ssh keys. There's a step, a rather 
+important one, kind of buried in the comments, so I'll rewrite the commands here. I'm going to start completely over 
+since the names of my key pairs aren't consistent. Might as well make it clean, right?! </p>
+<ol>
+<li>Create new ssh key pairs</li>
+</ol>
+<div class="highlight"><pre><span></span>$ ssh-keygen -f ~/.ssh/git-edwardmurphy -t rsa -C <span class="s2">&quot;for git user edwardmurphy&quot;</span>
+$ ssh-keygen -f ~/.ssh/git-big6e -t rsa -C <span class="s2">&quot;for git user big6e&quot;</span>
+</pre></div>
+
+
+<ol>
+<li>Add new keys</li>
+</ol>
+<div class="highlight"><pre><span></span>$ ssh-add ~/.ssh/git-edwardmurphy
+$ ssh-add ~/.ssh/git-big6e
+</pre></div>
+
+
+<ol>
+<li>For each new key pair, copy the public key to the settings in GitHub account</li>
+</ol>
+<div class="highlight"><pre><span></span>$ cat ~/.ssh/git-edwardmurphy.pub
+$ cat ~/.ssh/git-big6e.pub
+
+4. Modify/create a configuration file in the ssh directory
+</pre></div>
+
+
+<p>$ nano ~/.ssh/config</p>
+<p>Host github.com-edwardmurphy
+HostName github.com
+User git
+IdentityFile ~/.ssh/git-edwardmurphy</p>
+<p>Host github.com-big6e
+HostName github.com
+User git
+IdentityFile ~/.ssh/git-big6e</p>
+<div class="highlight"><pre><span></span>5. For each local repo, remove the remote repo and add a new remote repo as in this example
+</pre></div>
+
+
+<p>$ cd ~/ghpages/output
+$ git remote remove origin
+$ git remote add origin git@github.com-edwardmurphy:edwardmurphy/edwardmurphy.github.io
+```</p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="https://edwardmurphy.github.io/category/blog.html">Blog</a></li>
+	                <li ><a href="https://edwardmurphy.github.io/category/book-reviews.html">Book Reviews</a></li>
+	                <li ><a href="https://edwardmurphy.github.io/category/data-science.html">Data Science</a></li>
+	                <li class="active"><a href="https://edwardmurphy.github.io/category/nerdy-stuff.html">Nerdy Stuff</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/edwardmurphy">GitHub</a><i></i></li>
+				    <li><a href="https://www.linkedin.com/in/edward-murphy-000b002">LinkedIn</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="https://flipboard.com/@emurphy711">Flipboard</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  Edward Murphy - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>
