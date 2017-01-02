@@ -1,97 +1,108 @@
-<!doctype html>
-<html lang="">	
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<title>github - ad astra per aspera</title>	
-	<meta name="author" content="Edward Murphy">
-	
+        <meta charset="utf-8" />
+        <title>ad astra per aspera - github</title>
+        <link rel="stylesheet" href="https://edwardmurphy.github.io/theme/css/main.css" />
 
-	<link rel="stylesheet" href="https://edwardmurphy.github.io/theme/css/main.css" type="text/css" />
-		
-
-
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
 </head>
-	
-<body>
 
-    <div class="container">
-	  
-	  <header role="banner">
-	    <div class="feeds">
-	    </div>
-		<a href="https://edwardmurphy.github.io" class="title">ad astra per aspera</a>
-      </header>
-	
-	  <div class="wrapper">
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://edwardmurphy.github.io/">ad astra per aspera </a></h1>
+                <nav><ul>
+                    <li><a href="https://edwardmurphy.github.io/category/blog.html">Blog</a></li>
+                    <li><a href="https://edwardmurphy.github.io/category/book-reviews.html">Book Reviews</a></li>
+                    <li><a href="https://edwardmurphy.github.io/category/data-science.html">Data Science</a></li>
+                    <li><a href="https://edwardmurphy.github.io/category/nerdy-stuff.html">Nerdy Stuff</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
 
-		  <div role="main" class="content">
-
-<h1>Post tagged: github</h1>
-
-<article class="summary">
-<div class="metadata">
-  <time datetime="2016-12-09T00:00:00-08:00" pubdate>Fri 09 December 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://edwardmurphy.github.io/author/edward-murphy.html">Edward Murphy</a>
-    </address>
-  in <a href="https://edwardmurphy.github.io/category/nerdy-stuff.html">Nerdy Stuff</a>
-<p class="tags">tagged <a href="https://edwardmurphy.github.io/tag/ssh.html">ssh</a>, <a href="https://edwardmurphy.github.io/tag/github.html">github</a></p></div>  <div>
-    <h2>
-      <a href="https://edwardmurphy.github.io/how-i-manage-multiple-ssh-keys-for-github-accounts.html" rel="bookmark" title="Permalink to How I Manage Multiple SSH Keys for GitHub Accounts">How I Manage Multiple SSH Keys for GitHub Accounts</a>
-    </h2>
-    <p><p>I'm working on a new website (<a href="https://big6e.github.io">big6e</a>) for which I'm again using the free hosting services of 
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="https://edwardmurphy.github.io/how-i-manage-multiple-ssh-keys-for-github-accounts.html">How I Manage Multiple SSH Keys for GitHub Accounts</a></h1>
+<footer class="post-info">
+        <span>Fri 09 December 2016</span>
+<span>| tags: <a href="https://edwardmurphy.github.io/tag/ssh.html">ssh</a><a href="https://edwardmurphy.github.io/tag/github.html">github</a></span>
+</footer><!-- /.post-info --><p>I'm working on a new website (<a href="https://big6e.github.io">big6e</a>) for which I'm again using the free hosting services of 
 GitHub. Thus, locally I now have 2 directories that are clones of repos from 2 different GitHub accounts. Since I use 
-ssh to push changes, I had to figure out how to manage …</p></p>
-  </div>
-</article>
-<div class="pagination">
+ssh to push changes, I had to figure out how to manage this.</p>
+<p>I used <a href="https://gist.github.com/jexchan/2351996">this</a> to configure multiple ssh keys. There's a step, a rather 
+important one, kind of buried in the comments, so I'll rewrite the commands here. I'm going to start completely over 
+since the names of my key pairs aren't consistent. Might as well make it clean, right?! </p>
+<ol>
+<li>Create new ssh key pairs</li>
+</ol>
+<div class="highlight"><pre><span></span>$ ssh-keygen -f ~/.ssh/git-edwardmurphy -t rsa -C <span class="s2">&quot;for git user edwardmurphy&quot;</span>
+$ ssh-keygen -f ~/.ssh/git-big6e -t rsa -C <span class="s2">&quot;for git user big6e&quot;</span>
+</pre></div>
+
+
+<ol>
+<li>Add new keys</li>
+</ol>
+<div class="highlight"><pre><span></span>$ ssh-add ~/.ssh/git-edwardmurphy
+$ ssh-add ~/.ssh/git-big6e
+</pre></div>
+
+
+<ol>
+<li>For each new key pair, copy the public key to the settings in GitHub account</li>
+</ol>
+<div class="highlight"><pre><span></span>$ cat ~/.ssh/git-edwardmurphy.pub
+$ cat ~/.ssh/git-big6e.pub
+
+4. Modify/create a configuration file in the ssh directory
+</pre></div>
+
+
+<p>$ nano ~/.ssh/config</p>
+<p>Host github.com-edwardmurphy
+HostName github.com
+User git
+IdentityFile ~/.ssh/git-edwardmurphy</p>
+<p>Host github.com-big6e
+HostName github.com
+User git
+IdentityFile ~/.ssh/git-big6e</p>
+<div class="highlight"><pre><span></span>5. For each local repo, remove the remote repo and add a new remote repo as in this example
+</pre></div>
+
+
+<p>$ cd ~/ghpages/output
+$ git remote remove origin
+$ git remote add origin git@github.com-edwardmurphy:edwardmurphy/edwardmurphy.github.io
+```</p>                </article>
+<p class="paginator">
     Page 1 / 1
-</div>
+</p>
+            </aside><!-- /#featured -->
+            </ol><!-- /#posts-list -->
+            </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="https://flipboard.com/@emurphy711">Flipboard</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
 
-		  </div>	
-		  
-		  <div class="sidebar">
-		    <div class="sidebar-container" >
+                            <li><a href="https://github.com/edwardmurphy">GitHub</a></li>
+                            <li><a href="https://www.linkedin.com/in/edward-murphy-000b002">LinkedIn</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
 
-
-  	          <nav>
-	            <h2>Categories</h2>
-	            <ul>
-	                <li ><a href="https://edwardmurphy.github.io/category/blog.html">Blog</a></li>
-	                <li ><a href="https://edwardmurphy.github.io/category/book-reviews.html">Book Reviews</a></li>
-	                <li ><a href="https://edwardmurphy.github.io/category/data-science.html">Data Science</a></li>
-	                <li ><a href="https://edwardmurphy.github.io/category/nerdy-stuff.html">Nerdy Stuff</a></li>
-	            </ul>
-	          </nav>
-
-	            <aside>
-	            <h2>Social</h2>
-			      <ul class="social">
-				    <li><a href="https://github.com/edwardmurphy">GitHub</a><i></i></li>
-				    <li><a href="https://www.linkedin.com/in/edward-murphy-000b002">LinkedIn</a><i></i></li>
-			      </ul>
-			    </aside>
-
-	            <aside>
-	              <h2>Blogroll</h2>
-	              <ul>
-	                  <li><a href="https://flipboard.com/@emurphy711">Flipboard</a></li>
-	              </ul>
-	            </aside>
-	        </div>
-		  </div>
-
-	  </div>
-
-      <footer>
-		<p role="contentinfo">
-		  Edward Murphy - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
-    	</p>
-
-	  </footer>	
-
-	</div>
-	
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
 
 </body>
 </html>

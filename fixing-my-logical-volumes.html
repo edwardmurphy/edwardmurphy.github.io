@@ -1,46 +1,39 @@
-<!doctype html>
-<html lang="">	
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<title>Fixing My Logical Volumes - ad astra per aspera</title>	
-	<meta name="author" content="Edward Murphy">
-	
+        <meta charset="utf-8" />
+        <title>Fixing My Logical Volumes</title>
+        <link rel="stylesheet" href="https://edwardmurphy.github.io/theme/css/main.css" />
 
-  <meta name="description" content="I use logical volumes on my Acer notebook. My current understanding of logical volumes is that they are most often utilized when disk space is combined across multiple physical volumes, i.e. disks. I have a single SSD in my notebook, so why use logical volumes? Because I like to …">
-
-
-
-	<link rel="stylesheet" href="https://edwardmurphy.github.io/theme/css/main.css" type="text/css" />
-		
-
-
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
 </head>
-	
-<body>
 
-    <div class="container">
-	  
-	  <header role="banner">
-	    <div class="feeds">
-	    </div>
-		<a href="https://edwardmurphy.github.io" class="title">ad astra per aspera</a>
-      </header>
-	
-	  <div class="wrapper">
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://edwardmurphy.github.io/">ad astra per aspera </a></h1>
+                <nav><ul>
+                    <li><a href="https://edwardmurphy.github.io/category/blog.html">Blog</a></li>
+                    <li><a href="https://edwardmurphy.github.io/category/book-reviews.html">Book Reviews</a></li>
+                    <li><a href="https://edwardmurphy.github.io/category/data-science.html">Data Science</a></li>
+                    <li class="active"><a href="https://edwardmurphy.github.io/category/nerdy-stuff.html">Nerdy Stuff</a></li>
+                </ul>
+                </nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://edwardmurphy.github.io/fixing-my-logical-volumes.html" rel="bookmark"
+           title="Permalink to Fixing My Logical Volumes">Fixing My Logical Volumes</a></h1>
+    </header>
 
-		  <div role="main" class="content">
-	<article class="full">
-		
-		<h1>Fixing My Logical Volumes</h1>
-		
-<div class="metadata">
-  <time datetime="2016-11-04T00:00:00-07:00" pubdate>Fri 04 November 2016</time>
-    <address class="vcard author">
-      by <a class="url fn" href="https://edwardmurphy.github.io/author/edward-murphy.html">Edward Murphy</a>
-    </address>
-  in <a href="https://edwardmurphy.github.io/category/nerdy-stuff.html">Nerdy Stuff</a>
-<p class="tags">tagged <a href="https://edwardmurphy.github.io/tag/logical-volumes.html">logical volumes</a>, <a href="https://edwardmurphy.github.io/tag/linux.html">linux</a></p></div>		
-		<p>I use <a href="https://wiki.archlinux.org/index.php/LVM">logical volumes</a> on my Acer notebook. My current understanding of logical volumes is that they are most often utilized when disk space is combined across multiple physical volumes, i.e. disks. I have a single SSD in my notebook, so why use logical volumes? Because I like to tinker with Linux distributions. I'm frequently installing new distros, resizing the space for each distro, adding shared space, uninstalling distros...tinkering. All of this is possible with a normal disk partitioning setup, but I found it to be cumbersome. After awhile unallocated partitions were squeezed between distros. Or I couldn't resize a partition easily since the next partition was not free. Sure, I could copy partitions to another disk, resize locally, then copy the saved partition. Or...I could use a tool that allows resizing on the fly. And is not "typical." Hence, my choice of logical volumes. </p>
+    <div class="entry-content">
+<footer class="post-info">
+        <span>Fri 04 November 2016</span>
+<span>| tags: <a href="https://edwardmurphy.github.io/tag/logical-volumes.html">logical volumes</a><a href="https://edwardmurphy.github.io/tag/linux.html">linux</a></span>
+</footer><!-- /.post-info -->      <p>I use <a href="https://wiki.archlinux.org/index.php/LVM">logical volumes</a> on my Acer notebook. My current understanding of logical volumes is that they are most often utilized when disk space is combined across multiple physical volumes, i.e. disks. I have a single SSD in my notebook, so why use logical volumes? Because I like to tinker with Linux distributions. I'm frequently installing new distros, resizing the space for each distro, adding shared space, uninstalling distros...tinkering. All of this is possible with a normal disk partitioning setup, but I found it to be cumbersome. After awhile unallocated partitions were squeezed between distros. Or I couldn't resize a partition easily since the next partition was not free. Sure, I could copy partitions to another disk, resize locally, then copy the saved partition. Or...I could use a tool that allows resizing on the fly. And is not "typical." Hence, my choice of logical volumes. </p>
 <p>Now, logical volumes even on a single disk are not a cakewalk. For one, I've had some difficulty installing new distros directly to a new logical volume. I'm writing this while running openSUSE Leap 42.1, which I had to install to a clean partition before copying to a logical volume. Logical volumes also aren't as visible - it is possible to delete the data on a logical volume without realizing it's there (<em>REFERENCE TO BE ADDED</em>). And, if you're like me and you don't really know what you're doing and you tinker, you can wind up with a scenario like I currently have: logical volumes spread across multiple (logical) partitions within a single extended partition.</p>
 <p>I probably couldn't even accurately detail how I got to my current partition setup. Just so...much...tinkering. So, it's messy. Very messy. And I want to clean it up. I want a single partition that will include all my logical volumes. Then I can tinker away cleanly.</p>
 <p>First, here's a snapshot of my current partitioning:</p>
@@ -175,60 +168,31 @@ to the new partition:</p>
 <li>Can't tell you how many times I've had issues booting into a distro, and the solution being <strong>UPDATE /etc/fstab</strong>! This has almost become second nature to me now, to check this when I can't boot into a distro. </li>
 <li>One of the "joys" of working with different distros is figuring out how to do the same exact thing with different (unique) commands, e.g. <strong>mkinitrd</strong> vs. <strong>update-initramfs</strong>. I say joy now, but sometimes I wonder why the hell I'm diluting my knowledge. It rather confuses me sometimes. Perhaps I'd be better off REALLY knowing how to update initial ram disks in Debian, for example, and to hell with the rest. Hmmmm...nah. I like tinkering too much. But it does mean I have to relearn quite a bit. </li>
 <li>The most important thing I did?? I WROTE THIS ALL DOWN! Seriously, I've performed these steps more than once, and as I just mentioned, I had to start from scratch each time I did this. I'm really happy I have a blog that no one will likely read. At least as far as this. If you have...wow, I'm grateful you have. Truly.</li>
-</ol>	
+</ol>
+    </div><!-- /.entry-content -->
 
-	</article>
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="https://flipboard.com/@emurphy711">Flipboard</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
 
-    <p>
-	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-	</p>
+                            <li><a href="https://github.com/edwardmurphy">GitHub</a></li>
+                            <li><a href="https://www.linkedin.com/in/edward-murphy-000b002">LinkedIn</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
 
-
-		  </div>	
-		  
-		  <div class="sidebar">
-		    <div class="sidebar-container" >
-
-
-  	          <nav>
-	            <h2>Categories</h2>
-	            <ul>
-	                <li ><a href="https://edwardmurphy.github.io/category/blog.html">Blog</a></li>
-	                <li ><a href="https://edwardmurphy.github.io/category/book-reviews.html">Book Reviews</a></li>
-	                <li ><a href="https://edwardmurphy.github.io/category/data-science.html">Data Science</a></li>
-	                <li class="active"><a href="https://edwardmurphy.github.io/category/nerdy-stuff.html">Nerdy Stuff</a></li>
-	            </ul>
-	          </nav>
-
-	            <aside>
-	            <h2>Social</h2>
-			      <ul class="social">
-				    <li><a href="https://github.com/edwardmurphy">GitHub</a><i></i></li>
-				    <li><a href="https://www.linkedin.com/in/edward-murphy-000b002">LinkedIn</a><i></i></li>
-			      </ul>
-			    </aside>
-
-	            <aside>
-	              <h2>Blogroll</h2>
-	              <ul>
-	                  <li><a href="https://flipboard.com/@emurphy711">Flipboard</a></li>
-	              </ul>
-	            </aside>
-	        </div>
-		  </div>
-
-	  </div>
-
-      <footer>
-		<p role="contentinfo">
-		  Edward Murphy - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
-    	</p>
-
-	  </footer>	
-
-	</div>
-	
+        <footer id="contentinfo" class="body">
+                <p>Powered by <a href="http://getpelican.com/">Pelican</a>. Theme <a href="https://github.com/blueicefield/pelican-blueidea/">blueidea</a>, inspired by the default theme.</p>
+        </footer><!-- /#contentinfo -->
 
 </body>
 </html>
