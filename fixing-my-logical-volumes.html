@@ -14,6 +14,8 @@
         <header id="banner" class="body">
                 <h1><a href="https://edwardmurphy.github.io/">ad astra per aspera </a></h1>
                 <nav><ul>
+    
+                        <li><a href="https://edwardmurphy.github.io/">Welcome!</a></li>
                     <li><a href="https://edwardmurphy.github.io/category/about.html">About</a></li>
                     <li><a href="https://edwardmurphy.github.io/category/book-reviews.html">Book Reviews</a></li>
                     <li><a href="https://edwardmurphy.github.io/category/cv.html">CV</a></li>
@@ -39,7 +41,7 @@
 <p>Now, logical volumes even on a single disk are not a cakewalk. For one, I've had some difficulty installing new distros directly to a new logical volume. I'm writing this while running openSUSE Leap 42.1, which I had to install to a clean partition before copying to a logical volume. Logical volumes also aren't as visible - it is possible to delete the data on a logical volume without realizing it's there (<em>REFERENCE TO BE ADDED</em>). And, if you're like me and you don't really know what you're doing and you tinker, you can wind up with a scenario like I currently have: logical volumes spread across multiple (logical) partitions within a single extended partition.</p>
 <p>I probably couldn't even accurately detail how I got to my current partition setup. Just so...much...tinkering. So, it's messy. Very messy. And I want to clean it up. I want a single partition that will include all my logical volumes. Then I can tinker away cleanly.</p>
 <p>First, here's a snapshot of my current partitioning:</p>
-<p><img alt="Current Partition" src="https://edwardmurphy.github.io/currentpartition.png"></p>
+<p><img alt="Current Partition" src="https://edwardmurphy.github.io/currentpartition.png" /></p>
 <p>Some things of note:</p>
 <ol>
 <li>The first partition is unused and may be completely unnecessary. I use grub as my bootloader, and the files for this are located in the extended partition. I really have no idea right now if this first partition is necessary. Perhaps Windows uses it, but I don't have Windows installed. I'm thinking this can be removed with no problem.</li>
@@ -60,19 +62,19 @@
 <p>This should be fun. I'll document the execution step-by-step as we go along.</p>
 <h2>Imaging Current Distros</h2>
 <p>There are a multitude of tools for creating images of disk partitions, but whenever possible I like to use the <em>dd</em> command. It's powerful, and dangerous, but it's right there - no need to install other software, figure out a new GUI, boot from a rescue USB with Clonezilla. Since I have two distros (plus another logical volume for shared files), I can image each distro while booted into the other. So, while booted into openSUSE Leap 42.1, I can image the Linux Mint distro very easily:</p>
-<div class="highlight"><pre><span></span># dd if=/dev/mapper/linux-mint of=/path/to/image.img bs=4M
+<div class="highlight"><pre># dd if=/dev/mapper/linux-mint of=/path/to/image.img bs=4M
 </pre></div>
 
 
 <p>I used an external drive to save the image. The block size is...well I don't really know why I use 4M. A remnant of a quick Google search. Perhaps (likely) can be optimized. But there it is. Wait, and when complete you have an image of the distro. Simple. Just to check, we can mount the image using a loop device:</p>
-<div class="highlight"><pre><span></span># losetup /dev/loop0 /path/to/image.img
+<div class="highlight"><pre># losetup /dev/loop0 /path/to/image.img
 # mount /dev/loop0 -o loop /mnt
 $ cd /mnt &amp;&amp; ls -Al
 </pre></div>
 
 
 <p>Quick look to see that the expected directories are there to give a little boost of confidence that all went well. Remember, the SSD will be wiped clean, so be confident as can be! Then repeat for all other logical volumes as needed. Remember to unmount and delete the loop devices:</p>
-<div class="highlight"><pre><span></span># umount /dev/loop0
+<div class="highlight"><pre># umount /dev/loop0
 # losetup -d /dev/loop0
 </pre></div>
 
@@ -90,31 +92,31 @@ $ cd /mnt &amp;&amp; ls -Al
 <p>So...this is where things got difficult. The Linux Mint image I created was corrupted somehow, so using <strong>dd</strong> to copy the image to the newly created lvm partition was not possible. I was not yet aware of the <strong>ddrescue</strong> utility, so I put all my effort into copying the openSUSE image first.</p>
 <h3>openSUSE on Primary Partition</h3>
 <p>Copying the openSUSE image directly to the lvm partition did not work because the initramfs image used at boot did not include capability for logical volumes (through dracut). Thus, at boot the logical volume devices in /dev/mapper/ were not available for mounting. Because of this, I first had to copy the image to a primary partition (/dev/sda1). The file system on the first partition needed to be created first. This can be accomplished in Parted Magic.</p>
-<div class="highlight"><pre><span></span># mkfs.ext4 /dev/sda1
+<div class="highlight"><pre># mkfs.ext4 /dev/sda1
 # dd if=/path/to/image.img of=/dev/sda1 bs=4M
 </pre></div>
 
 
 <p>Now, another issue comes into play. <strong>dd</strong> is a direct copy of the old distro, so the UUIDs are copied into the new partition (which was given a different UUID at creation). I don't even begin to understand it at a deeper level than what I just stated. Needless to say, it causes major issues at boot since the root partition cannot be found due to mismatch of UUID. This assumes mount points are referenced by UUID. I suppose using labels would have prevented this, but frankly I don't know. In any event, what I needed to do was give the partition a new UUID after copying the image then update /etc/fstab with the new UUID for the root partition. </p>
-<div class="highlight"><pre><span></span># tune2fs -U random /dev/sda1
+<div class="highlight"><pre># tune2fs -U random /dev/sda1
 # blkid | grep -e &#39;/dev/sda1&#39; &gt;&gt; /etc/fstab
 </pre></div>
 
 
 <p>Then I opened /etc/fstab and cleaned it up to look like:</p>
-<div class="highlight"><pre><span></span>UUID=uuid   /   ext4    defaults    0   1
+<div class="highlight"><pre>UUID=uuid   /   ext4    defaults    0   1
 </pre></div>
 
 
 <p>Next, the initial ram disk (initrd in SUSE) needs to be updated. This requires chrooting into the SUSE file system; however I was not able to do this in Parted Magic. So I booted into a live version of Arch Linux. Arch is suuuuuuper handy for chrooting because it becomes with a utility <strong>arch-chroot</strong> which automatically mounts /proc, /dev, and /sys. After booting into Arch and mounting /dev/sda1 at /mnt, I ran the following commands:</p>
-<div class="highlight"><pre><span></span># arch-chroot /mnt
+<div class="highlight"><pre># arch-chroot /mnt
 # mkinitrd
 </pre></div>
 
 
 <p>Quick note on <strong>mkinitrd</strong>. This command uses the utility <strong>dracut</strong> to create the initial ram disk. So why not run dracut? Because it didn't always work for me, especially later when copying the distro to a logical volume. It's likely I'm missing a few simply options, so not a big headscratcher. But <strong>mkinitrd</strong> worked, so I stuck with it. </p>
 <p>Finally, grub bootloader needs to be installed on the disk and the configuration updated. I had to add /usr/bin and /usr/sbin to the PATH environment variable before installing grub.</p>
-<div class="highlight"><pre><span></span># grub2-install /dev/sda
+<div class="highlight"><pre># grub2-install /dev/sda
 # grub2-mkconfig -o /boot/grub/grub.cfg
 </pre></div>
 
@@ -122,19 +124,19 @@ $ cd /mnt &amp;&amp; ls -Al
 <p>Reboot and openSUSE boots! Easy as...pause not.</p>
 <h3>Linux Mint in Logical Volume</h3>
 <p>From our fresh install of openSUSE, create a volume group in our lvm physical volume (/dev/sda2) and create some space for Linux Mint:</p>
-<div class="highlight"><pre><span></span># vgcreate linux /dev/sda2
+<div class="highlight"><pre># vgcreate linux /dev/sda2
 # lvcreate -L 30G -n mint linux
 # mkfs.ext4 /dev/mapper/linux-mint
 </pre></div>
 
 
 <p>Since the mint image was corrupted, I used <strong>ddrescue</strong> to copy the image to the new logical volume. It turned out that single file was corrupted (total size was 4096K), but <strong>ddrescue</strong> had no problem doing its thing:</p>
-<div class="highlight"><pre><span></span># ddrescue --force /path/to/image.img /dev/mapper/linux-mint
+<div class="highlight"><pre># ddrescue --force /path/to/image.img /dev/mapper/linux-mint
 </pre></div>
 
 
 <p>Next, created a new UUID for the mint logical volume as was done above for openSUSE, then mount the logical volume for chrooting. This time, I had to mount /proc, /dev/, and /sys myself. Assuming the mint logical volume is mounted at /mnt, run the following in order to update the initial ram disk (initramfs in Mint):</p>
-<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /mnt
+<div class="highlight"><pre>$ <span class="nb">cd</span> /mnt
 <span class="c1"># mount -t proc /proc proc/</span>
 <span class="c1"># mount --rbind /dev dev/</span>
 <span class="c1"># mount --rbind /sys sys/</span>
@@ -144,7 +146,7 @@ $ cd /mnt &amp;&amp; ls -Al
 
 
 <p>Update /etc/fstab as above, exit chroot, and update the bootloader:</p>
-<div class="highlight"><pre><span></span># grub2-mkconfig -o /boot/grub/grub.cfg
+<div class="highlight"><pre># grub2-mkconfig -o /boot/grub/grub.cfg
 </pre></div>
 
 
@@ -162,7 +164,7 @@ $ cd /mnt &amp;&amp; ls -Al
 9. Install grub2 and configure from Mint</p>
 <p>Fiiiiiiiiiinally. Done. Here's how my disk is partitioned now, with both openSUSE Leap 42.1 and Linux Mint 18 copied 
 to the new partition:</p>
-<p><img alt="New Partition" src="https://edwardmurphy.github.io/newpartition.png"></p>
+<p><img alt="New Partition" src="https://edwardmurphy.github.io/newpartition.png" /></p>
 <h2>What I Learned</h2>
 <ol>
 <li>Perhaps a program like Clonezilla is better in this situation. I have used it previously, and frankly I don't recall having to update UUIDs. My memory could be wrong though. I do remember that it's a pain to copy a Clonezilla image to a different partition. Well, pain is stretching it. One of the files in the Clonezilla folder for the image needs to be updated with the new partition. </li>

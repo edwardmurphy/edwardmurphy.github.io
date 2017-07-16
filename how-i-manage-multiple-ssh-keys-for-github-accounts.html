@@ -14,6 +14,8 @@
         <header id="banner" class="body">
                 <h1><a href="https://edwardmurphy.github.io/">ad astra per aspera </a></h1>
                 <nav><ul>
+    
+                        <li><a href="https://edwardmurphy.github.io/">Welcome!</a></li>
                     <li><a href="https://edwardmurphy.github.io/category/about.html">About</a></li>
                     <li><a href="https://edwardmurphy.github.io/category/book-reviews.html">Book Reviews</a></li>
                     <li><a href="https://edwardmurphy.github.io/category/cv.html">CV</a></li>
@@ -44,7 +46,7 @@ since the names of my key pairs aren't consistent. Might as well make it clean, 
 <ol>
 <li>Create new ssh key pairs</li>
 </ol>
-<div class="highlight"><pre><span></span>$ ssh-keygen -f ~/.ssh/git-edwardmurphy -t rsa -C <span class="s2">&quot;for git user edwardmurphy&quot;</span>
+<div class="highlight"><pre>$ ssh-keygen -f ~/.ssh/git-edwardmurphy -t rsa -C <span class="s2">&quot;for git user edwardmurphy&quot;</span>
 $ ssh-keygen -f ~/.ssh/git-big6e -t rsa -C <span class="s2">&quot;for git user big6e&quot;</span>
 </pre></div>
 
@@ -52,7 +54,7 @@ $ ssh-keygen -f ~/.ssh/git-big6e -t rsa -C <span class="s2">&quot;for git user b
 <ol>
 <li>Add new keys</li>
 </ol>
-<div class="highlight"><pre><span></span>$ ssh-add ~/.ssh/git-edwardmurphy
+<div class="highlight"><pre>$ ssh-add ~/.ssh/git-edwardmurphy
 $ ssh-add ~/.ssh/git-big6e
 </pre></div>
 
@@ -60,7 +62,7 @@ $ ssh-add ~/.ssh/git-big6e
 <ol>
 <li>For each new key pair, copy the public key to the settings in GitHub account</li>
 </ol>
-<div class="highlight"><pre><span></span>$ cat ~/.ssh/git-edwardmurphy.pub
+<div class="highlight"><pre>$ cat ~/.ssh/git-edwardmurphy.pub
 $ cat ~/.ssh/git-big6e.pub
 
 4. Modify/create a configuration file in the ssh directory
@@ -76,7 +78,7 @@ IdentityFile ~/.ssh/git-edwardmurphy</p>
 HostName github.com
 User git
 IdentityFile ~/.ssh/git-big6e</p>
-<div class="highlight"><pre><span></span>5. For each local repo, remove the remote repo and add a new remote repo as in this example
+<div class="highlight"><pre>5. For each local repo, remove the remote repo and add a new remote repo as in this example
 </pre></div>
 
 
